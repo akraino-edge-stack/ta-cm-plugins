@@ -97,6 +97,9 @@ class CaasValidation(cmvalidator.CMValidator):
     ENCRYPTED_CA = "encrypted_ca"
     ENCRYPTED_CA_KEY = "encrypted_ca_key"
 
+    DOMAIN_NAME = "dns_domain"
+    DOMAIN_NAME_PATTERN = "^[a-z0-9]([a-z0-9-\.]{0,253}[a-z0-9])?$"
+
     def __init__(self):
         cmvalidator.CMValidator.__init__(self)
         self.validation_utils = validation.ValidationUtils()
@@ -122,6 +125,7 @@ class CaasValidation(cmvalidator.CMValidator):
         self.validate_helm_parameters()
         self.validate_encrypted_ca(self.ENCRYPTED_CA)
         self.validate_encrypted_ca(self.ENCRYPTED_CA_KEY)
+        self.validate_dns_domain()
 
     def is_caas_mandatory(self, props):
         hosts_conf = json.loads(props[self.HOSTS_DOMAIN])
@@ -226,3 +230,12 @@ class CaasValidation(cmvalidator.CMValidator):
             base64.b64decode(enc_ca_str)
         except TypeError as exc:
             raise CaasValidationError('Invalid {}: {}'.format(enc_ca, exc))
+
+    def validate_dns_domain(self):
+        domain = self.caas_conf[self.DOMAIN_NAME]
+        if not self.caas_utils.is_optional_param_present(self.DOMAIN_NAME, self.caas_conf):
+            return
+        if not re.match(self.DOMAIN_NAME_PATTERN, domain):
+            raise CaasValidationError('{} is not a valid {} !'.format(
+                domain,
+                self.DOMAIN_NAME))
