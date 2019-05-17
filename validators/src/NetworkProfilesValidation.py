@@ -43,11 +43,19 @@ class NetworkProfilesValidation(cmvalidator.CMValidator):
     LINUX_BONDING_OPTIONS = 'linux_bonding_options'
     OVS_BONDING_OPTIONS = 'ovs_bonding_options'
 
+    TYPE_CAAS = 'caas'
+    TYPE_OPENSTACK = 'openstack'
     TYPE_OVS = 'ovs'
     TYPE_OVS_DPDK = 'ovs-dpdk'
     TYPE_OVS_OFFLOAD_SRIOV = "ovs-offload-sriov"
     TYPE_OVS_OFFLOAD_VIRTIO = "ovs-offload-virtio"
-    VALID_TYPES = [TYPE_OVS, TYPE_OVS_DPDK, TYPE_OVS_OFFLOAD_SRIOV, TYPE_OVS_OFFLOAD_VIRTIO]
+    VALID_PROVIDER_TYPES = [TYPE_CAAS,
+                            TYPE_OVS,
+                            TYPE_OVS_DPDK,
+                            TYPE_OVS_OFFLOAD_SRIOV,
+                            TYPE_OVS_OFFLOAD_VIRTIO]
+    SINGLE_NIC_UNSUPPORTED_TYPES = [TYPE_CAAS, TYPE_OVS_DPDK]
+    VALID_SRIOV_TYPES = [TYPE_CAAS, TYPE_OPENSTACK]
 
     MODE_LACP = 'mode=lacp'
     MODE_LACP_LAYER34 = 'mode=lacp-layer34'
@@ -82,8 +90,13 @@ class NetworkProfilesValidation(cmvalidator.CMValidator):
     ERR_UNTAGGED_MTU_SIZE = 'Untagged network {1} in {0} has too small MTU, ' + \
                             'VLAN tagged networks with bigger MTU exists on the same interface'
 
-    ERR_INVALID_TYPE = 'Invalid provider network type for interface {}, valid types: %s' % \
-        VALID_TYPES
+    ERR_INVALID_PROVIDER_TYPE = \
+        'Invalid provider network type for interface {}, valid types: %s' % \
+        VALID_PROVIDER_TYPES
+    ERR_INVALID_SRIOV_TYPE = \
+        'Invalid sr-iov network type for network {}, valid types: %s' % \
+        VALID_SRIOV_TYPES
+
     ERR_DPDK_MAX_RX_QUEUES = 'Invalid %s value {}, must be positive integer' % DPDK_MAX_RX_QUEUES
     ERR_MISSPLACED_MTU = 'Missplaced MTU inside %s interface {}' % PROVIDER_NETWORK_INTERFACES
     ERR_OVS_TYPE_CONFLICT = 'Cannot have both %s and %s types of provider networks in {}' % \
@@ -110,11 +123,11 @@ class NetworkProfilesValidation(cmvalidator.CMValidator):
     ERR_SRIOV_PROVIDER_VLAN_CONFLICT = \
         'SR-IOV network {} vlan range is conflicting with other provider network vlan'
     ERR_SINGLE_NIC_VIOLATION = \
-        'Provider and infa networks on the same interface in {}: ' + \
+        'Provider and infra networks on the same interface in {}: ' + \
         'Supported only if all networks on the same interface'
-    ERR_SINGLE_NIC_DPDK = \
-        'Provider and infa networks on the same interface in {}: ' + \
-        'Not supported for %s type of provider networks' % TYPE_OVS_DPDK
+    ERR_SINGLE_NIC_PROVIDER_TYPE = \
+        'Provider and infra networks on the same interface in {0}: ' + \
+        'Not supported for {1} type of provider networks'
     ERR_INFRA_PROVIDER_VLAN_CONFLICT = \
         'Provider network {} vlan range is conflicting with infra network vlan'
     ERR_INFRA_PROVIDER_UNTAGGED_CONFLICT = \
@@ -180,7 +193,12 @@ class NetworkProfilesValidation(cmvalidator.CMValidator):
 
     @staticmethod
     def err_provnet_type(iface):
-        err = NetworkProfilesValidation.ERR_INVALID_TYPE.format(iface)
+        err = NetworkProfilesValidation.ERR_INVALID_PROVIDER_TYPE.format(iface)
+        raise validation.ValidationError(err)
+
+    @staticmethod
+    def err_sriov_type(network):
+        err = NetworkProfilesValidation.ERR_INVALID_SRIOV_TYPE.format(network)
         raise validation.ValidationError(err)
 
     @staticmethod
@@ -285,8 +303,8 @@ class NetworkProfilesValidation(cmvalidator.CMValidator):
         raise validation.ValidationError(err)
 
     @staticmethod
-    def err_single_nic_dpdk(profile):
-        err = NetworkProfilesValidation.ERR_SINGLE_NIC_DPDK.format(profile)
+    def err_single_nic_provider_type(profile, provider_type):
+        err = NetworkProfilesValidation.ERR_SINGLE_NIC_PROVIDER_TYPE.format(profile, provider_type)
         raise validation.ValidationError(err)
 
     @staticmethod
@@ -582,6 +600,9 @@ class NetworkProfilesValidation(cmvalidator.CMValidator):
                 if (self.key_exists(networks[network], self.TRUSTED) and
                         not self.val_is_bool(networks[network], self.TRUSTED)):
                     self.err_not_bool(network, self.TRUSTED)
+                if (self.key_exists(networks[network], self.TYPE) and
+                        networks[network][self.TYPE] not in self.VALID_SRIOV_TYPES):
+                    self.err_sriov_type(network)
                 self.must_be_list(networks, network, self.INTERFACES)
                 for iface in networks[network][self.INTERFACES]:
                     sriov_ifaces.append(iface)
@@ -616,8 +637,8 @@ class NetworkProfilesValidation(cmvalidator.CMValidator):
                         if (len(self.conf[profile_name][self.PROVIDER_NETWORK_INTERFACES]) > 1 or
                                 len(self.conf[profile_name][self.INTERFACE_NET_MAPPING]) > 1):
                             self.err_single_nic_violation(profile_name)
-                        if iface_info[self.TYPE] == self.TYPE_OVS_DPDK:
-                            self.err_single_nic_dpdk(profile_name)
+                        if iface_info[self.TYPE] in self.SINGLE_NIC_UNSUPPORTED_TYPES:
+                            self.err_single_nic_provider_type(profile_name, iface_info[self.TYPE])
                         self.validate_shared_infra_provider(network, infra_info, vlan_ranges)
                 for idx, ranges1 in enumerate(vlan_ranges_list):
                     for ranges2 in vlan_ranges_list[(idx+1):]:
@@ -626,10 +647,12 @@ class NetworkProfilesValidation(cmvalidator.CMValidator):
 
     def validate_not_part_of_lacp(self, profile_conf, iface):
         if self.key_exists(profile_conf, self.PROVIDER_NETWORK_INTERFACES):
-            for provider_iface in profile_conf[self.PROVIDER_NETWORK_INTERFACES]:
-                if self.is_bond_iface(provider_iface):
-                    if iface in profile_conf[self.BONDING_INTERFACES][provider_iface]:
-                        if profile_conf[self.OVS_BONDING_OPTIONS] == self.MODE_LACP:
+            for prov_iface, prov in profile_conf[self.PROVIDER_NETWORK_INTERFACES].iteritems():
+                if self.is_bond_iface(prov_iface):
+                    if iface in profile_conf[self.BONDING_INTERFACES][prov_iface]:
+                        bonding_type = self.OVS_BONDING_OPTIONS \
+                            if prov[self.TYPE] != self.TYPE_CAAS else self.LINUX_BONDING_OPTIONS
+                        if profile_conf[bonding_type] == self.MODE_LACP:
                             self.err_sriov_lacp_conflict()
                         # part of ovs bonding
                         # do not check linux bonding options even if shared with infra networks
@@ -751,7 +774,7 @@ class NetworkProfilesValidation(cmvalidator.CMValidator):
 
     def validate_provider_net_type(self, provnet_ifaces_conf, iface):
         self.must_be_str(provnet_ifaces_conf, iface, self.TYPE)
-        if provnet_ifaces_conf[iface][self.TYPE] not in self.VALID_TYPES:
+        if provnet_ifaces_conf[iface][self.TYPE] not in self.VALID_PROVIDER_TYPES:
             self.err_provnet_type(iface)
 
     def validate_provider_net_vf_count(self, provnet_ifaces_conf, iface):
@@ -785,7 +808,10 @@ class NetworkProfilesValidation(cmvalidator.CMValidator):
         provider_ifaces = []
         if self.key_exists(self.conf[profile_name], self.PROVIDER_NETWORK_INTERFACES):
             for iface in self.conf[profile_name][self.PROVIDER_NETWORK_INTERFACES]:
-                self.validate_net_iface_integrity(profile_name, iface, self.OVS_BONDING_OPTIONS)
+                iface_data = self.conf[profile_name][self.PROVIDER_NETWORK_INTERFACES][iface]
+                bonding_type = self.OVS_BONDING_OPTIONS \
+                    if iface_data[self.TYPE] != self.TYPE_CAAS else self.LINUX_BONDING_OPTIONS
+                self.validate_net_iface_integrity(profile_name, iface, bonding_type)
                 provider_ifaces.append(iface)
         for iface in self.conf[profile_name][self.INTERFACE_NET_MAPPING]:
             if iface not in provider_ifaces:
