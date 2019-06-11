@@ -80,19 +80,11 @@ class CaasValidation(cmvalidator.CMValidator):
     DOCKER_SIZE_QOUTA = "docker_size_quota"
     DOCKER_SIZE_QOUTA_PATTERN = r"^\d*[G,M,K]$"
 
-    CHART_NAME = "chart_name"
-    CHART_NAME_PATTERN = r"[A-Za-z0-9\.-_]+"
-
-    CHART_VERSION = "chart_version"
-    CHART_VERSION_PATTERN = r"^\d+\.\d+\.\d+$"
-
     HELM_OP_TIMEOUT = "helm_operation_timeout"
 
     DOCKER0_CIDR = "docker0_cidr"
 
     INSTANTIATION_TIMEOUT = "instantiation_timeout"
-
-    HELM_PARAMETERS = "helm_parameters"
 
     ENCRYPTED_CA = "encrypted_ca"
     ENCRYPTED_CA_KEY = "encrypted_ca_key"
@@ -117,12 +109,9 @@ class CaasValidation(cmvalidator.CMValidator):
             return
         self.props_pre_check(props)
         self.validate_docker_size_quota()
-        self.validate_chart_name()
-        self.validate_chart_version()
         self.validate_helm_operation_timeout()
         self.validate_docker0_cidr(props)
         self.validate_instantiation_timeout()
-        self.validate_helm_parameters()
         self.validate_encrypted_ca(self.ENCRYPTED_CA)
         self.validate_encrypted_ca(self.ENCRYPTED_CA_KEY)
         self.validate_dns_domain()
@@ -154,25 +143,6 @@ class CaasValidation(cmvalidator.CMValidator):
             raise CaasValidationError('{} is not a valid {}!'.format(
                 self.caas_conf[self.DOCKER_SIZE_QOUTA],
                 self.DOCKER_SIZE_QOUTA))
-
-    def validate_chart_name(self):
-        if not self.caas_utils.is_optional_param_present(self.CHART_NAME, self.caas_conf):
-            return
-        if not re.match(self.CHART_NAME_PATTERN, self.caas_conf[self.CHART_NAME]):
-            raise CaasValidationError('{} is not a valid {} !'.format(
-                self.caas_conf[self.CHART_NAME],
-                self.CHART_NAME))
-
-    def validate_chart_version(self):
-        if not self.caas_utils.is_optional_param_present(self.CHART_VERSION, self.caas_conf):
-            return
-        if not self.caas_conf[self.CHART_NAME]:
-            logging.warn('{} shall be set only, when {} is set.'.format(
-                self.CHART_VERSION, self.CHART_NAME))
-        if not re.match(self.CHART_VERSION_PATTERN, self.caas_conf[self.CHART_VERSION]):
-            raise CaasValidationError('{} is not a valid {} !'.format(
-                self.caas_conf[self.CHART_VERSION],
-                self.CHART_VERSION))
 
     def validate_helm_operation_timeout(self):
         if not self.caas_utils.is_optional_param_present(self.HELM_OP_TIMEOUT, self.caas_conf):
@@ -213,13 +183,6 @@ class CaasValidation(cmvalidator.CMValidator):
             raise CaasValidationError('{}:{} is not an integer'.format(
                 self.INSTANTIATION_TIMEOUT,
                 self.caas_conf[self.INSTANTIATION_TIMEOUT]))
-
-    def validate_helm_parameters(self):
-        if not self.caas_utils.is_optional_param_present(self.HELM_PARAMETERS, self.caas_conf):
-            return
-        if not isinstance(self.caas_conf[self.HELM_PARAMETERS], dict):
-            raise CaasValidationError('The given input: {} is not a dictionary!'.format(
-                self.caas_conf[self.HELM_PARAMETERS]))
 
     def validate_encrypted_ca(self, enc_ca):
         self.caas_utils.check_key_in_dict(enc_ca, self.caas_conf)
