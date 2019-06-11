@@ -51,7 +51,7 @@ class storagehandler(cmuserconfig.CMUserConfigPlugin):
         """TODO: Set these dynamically according to user configuration instead."""
         try:
             self._set_handlers(confman)
-            if (self._backend == 'ceph') and ('ceph' in self._storage_backends):
+            if ('ceph' in self._storage_backends):
                 if self.storage_config_handler.is_ceph_enabled():
                     self.storage_config_handler.set_mons(self._managements)
                     self.storage_config_handler.set_ceph_mons(self._managements)
