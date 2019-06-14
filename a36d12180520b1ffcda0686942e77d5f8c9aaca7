@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e7464a6b_af729ed0",
+        "filename": "auxiliaryuserconfighandlers/recnetworkprofilehandler/recnetworkprofilehandler.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 186
+      },
+      "writtenOn": "2019-06-14T16:34:14Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think we need to copyright headers for new stuff, but let me ask Juha\n\nAlthough this is a newly created file is still the intellectual property of Nokia, so I believe copyright header with the proper licencing note should be included in the header.",
+      "parentUuid": "8a445733_6d70cc2b",
+      "revId": "a36d12180520b1ffcda0686942e77d5f8c9aaca7",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52881300_9e4fd738",
         "filename": "auxiliaryuserconfighandlers/recnetworkprofilehandler/recnetworkprofilehandler.py",
         "patchSetId": 12
@@ -47,6 +65,24 @@
       "writtenOn": "2019-06-14T14:52:03Z",
       "side": 1,
       "message": "ohmmm... are you sure about this? :)",
+      "revId": "a36d12180520b1ffcda0686942e77d5f8c9aaca7",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03825548_3a4128a8",
+        "filename": "auxiliaryuserconfighandlers/recnetworkprofilehandler/recnetworkprofilehandler.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 186
+      },
+      "writtenOn": "2019-06-14T16:34:14Z",
+      "side": 1,
+      "message": "\u003e ohmmm... are you sure about this? :)\n\nNope. :) Corrected.",
+      "parentUuid": "52881300_9e4fd738",
       "revId": "a36d12180520b1ffcda0686942e77d5f8c9aaca7",
       "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "0c0d56aa_3d121140",
+        "filename": "auxiliaryuserconfighandlers/recnetworkprofilehandler/recnetworkprofilehandler.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 186
+      },
+      "writtenOn": "2019-06-14T16:34:14Z",
+      "side": 1,
+      "message": "I believe CM handles exception types in different ways, that\u0027s the reason for the \"conversion\".",
+      "parentUuid": "9d647610_6b5b0982",
+      "revId": "a36d12180520b1ffcda0686942e77d5f8c9aaca7",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1dec38b4_b5f3ac23",
         "filename": "auxiliaryuserconfighandlers/recnetworkprofilehandler/recnetworkprofilehandler.py",
         "patchSetId": 12
@@ -81,6 +135,24 @@
       "writtenOn": "2019-06-14T14:52:03Z",
       "side": 1,
       "message": "we need to set this to all provider_networks, not just sriov",
+      "revId": "a36d12180520b1ffcda0686942e77d5f8c9aaca7",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbfd75cd_37c6f652",
+        "filename": "auxiliaryuserconfighandlers/recnetworkprofilehandler/recnetworkprofilehandler.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 186
+      },
+      "writtenOn": "2019-06-14T16:34:14Z",
+      "side": 1,
+      "message": "\u003e we need to set this to all provider_networks, not just sriov\n\nDone.",
+      "parentUuid": "1dec38b4_b5f3ac23",
       "revId": "a36d12180520b1ffcda0686942e77d5f8c9aaca7",
       "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
       "unresolved": true
