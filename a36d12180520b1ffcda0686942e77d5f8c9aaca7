@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70985b8a_69087a53",
+        "filename": "auxiliaryuserconfighandlers.spec",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 183
+      },
+      "writtenOn": "2019-06-14T14:49:50Z",
+      "side": 1,
+      "message": "recconfighandler?",
+      "revId": "a36d12180520b1ffcda0686942e77d5f8c9aaca7",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    }
+  ]
+}
