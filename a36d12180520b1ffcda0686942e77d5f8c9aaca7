@@ -16,6 +16,74 @@
       "revId": "a36d12180520b1ffcda0686942e77d5f8c9aaca7",
       "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a445733_6d70cc2b",
+        "filename": "auxiliaryuserconfighandlers/recnetworkprofilehandler/recnetworkprofilehandler.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 183
+      },
+      "writtenOn": "2019-06-14T14:52:03Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to copyright headers for new stuff, but let me ask Juha",
+      "revId": "a36d12180520b1ffcda0686942e77d5f8c9aaca7",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52881300_9e4fd738",
+        "filename": "auxiliaryuserconfighandlers/recnetworkprofilehandler/recnetworkprofilehandler.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 183
+      },
+      "writtenOn": "2019-06-14T14:52:03Z",
+      "side": 1,
+      "message": "ohmmm... are you sure about this? :)",
+      "revId": "a36d12180520b1ffcda0686942e77d5f8c9aaca7",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d647610_6b5b0982",
+        "filename": "auxiliaryuserconfighandlers/recnetworkprofilehandler/recnetworkprofilehandler.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 183
+      },
+      "writtenOn": "2019-06-14T14:52:03Z",
+      "side": 1,
+      "message": "why not just let it go up the stack?",
+      "revId": "a36d12180520b1ffcda0686942e77d5f8c9aaca7",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dec38b4_b5f3ac23",
+        "filename": "auxiliaryuserconfighandlers/recnetworkprofilehandler/recnetworkprofilehandler.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 183
+      },
+      "writtenOn": "2019-06-14T14:52:03Z",
+      "side": 1,
+      "message": "we need to set this to all provider_networks, not just sriov",
+      "revId": "a36d12180520b1ffcda0686942e77d5f8c9aaca7",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
     }
   ]
 }
