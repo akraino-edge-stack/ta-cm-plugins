@@ -16,6 +16,24 @@
       "revId": "521199769a559ef47e08d2c9c5e2349857817704",
       "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f847b8_c9558f60",
+        "filename": "validators/src/CaasValidation.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 186
+      },
+      "writtenOn": "2019-06-14T14:30:42Z",
+      "side": 1,
+      "message": "\u003e are you sure you want to merge logging related code too in the scope of this review?\n\nRemoved.",
+      "parentUuid": "559a19ce_6f83e903",
+      "revId": "521199769a559ef47e08d2c9c5e2349857817704",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
     }
   ]
 }
