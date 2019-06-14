@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "559a19ce_6f83e903",
+        "filename": "validators/src/CaasValidation.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 183
+      },
+      "writtenOn": "2019-06-14T08:57:00Z",
+      "side": 1,
+      "message": "are you sure you want to merge logging related code too in the scope of this review?",
+      "revId": "521199769a559ef47e08d2c9c5e2349857817704",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    }
+  ]
+}
