@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54374085_4e42d7cb",
+        "filename": "recuserconfighandlers/rechosthandler/rechosthandler.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 183
+      },
+      "writtenOn": "2019-06-20T10:43:11Z",
+      "side": 1,
+      "message": "update comment",
+      "revId": "ac90512a86511ad0fd6e1054e9b65fc28c901610",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    }
+  ]
+}
