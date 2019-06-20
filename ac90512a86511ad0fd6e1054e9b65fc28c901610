@@ -16,6 +16,24 @@
       "revId": "ac90512a86511ad0fd6e1054e9b65fc28c901610",
       "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f295e9_2fee32e9",
+        "filename": "recuserconfighandlers/rechosthandler/rechosthandler.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 184
+      },
+      "writtenOn": "2019-06-20T10:45:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "54374085_4e42d7cb",
+      "revId": "ac90512a86511ad0fd6e1054e9b65fc28c901610",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
     }
   ]
 }
