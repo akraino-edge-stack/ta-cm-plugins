@@ -92,6 +92,14 @@ class CaasValidation(cmvalidator.CMValidator):
     CLUSTER_NETS = 'cluster_networks'
     TENANT_NETS = 'tenant_networks'
 
+    BLOG_FORWARDING = "infra_log_store"
+    LOG_FORWARDING = "log_forwarding"
+    URL_PORT_PATTERN = r"^(?:https?|udp|tcp):(?:\/\/)(?:((?:[\w\.-]+|" \
+                       r"\[(([1-9a-f][0-9a-f]{0,3}|\:)\:[1-9a-f][0-9a-f]{0,3}){0,7}\])\:[0-9]+))"
+    FLUENTD_PLUGINS = ['elasticsearch', 'remote_syslog']
+    INFRA_LOG_FLUENTD_PLUGINS = ['elasticsearch', 'remote_syslog']
+    LOG_FW_STREAM = ['stdout', 'stderr', 'both']
+
     def __init__(self):
         cmvalidator.CMValidator.__init__(self)
         self.validation_utils = validation.ValidationUtils()
@@ -114,6 +122,7 @@ class CaasValidation(cmvalidator.CMValidator):
         self.validate_instantiation_timeout()
         self.validate_encrypted_ca(self.ENCRYPTED_CA)
         self.validate_encrypted_ca(self.ENCRYPTED_CA_KEY)
+        self.validate_log_forwarding()
         self.validate_networks(props)
 
     def _get_conf(self, props, domain):
@@ -196,6 +205,52 @@ class CaasValidation(cmvalidator.CMValidator):
             base64.b64decode(enc_ca_str)
         except TypeError as exc:
             raise CaasValidationError('Invalid {}: {}'.format(enc_ca, exc))
+
+    def validate_log_forwarding(self):
+        # pylint: disable=too-many-branches
+        if self.caas_utils.is_optional_param_present(self.BLOG_FORWARDING, self.caas_conf):
+            if self.caas_conf[self.BLOG_FORWARDING] not in self.INFRA_LOG_FLUENTD_PLUGINS:
+                raise CaasValidationError('"{}" property not valid! '
+                                          'Choose from {}!'.format(self.BLOG_FORWARDING,
+                                                                   self.INFRA_LOG_FLUENTD_PLUGINS))
+        if self.caas_utils.is_optional_param_present(self.LOG_FORWARDING, self.caas_conf):
+            log_fw_list = self.caas_conf[self.LOG_FORWARDING]
+            if log_fw_list:
+                url_d = dict()
+                url_s = set()
+                for list_item in log_fw_list:
+                    self.caas_utils.check_key_in_dict('namespace', list_item)
+                    if list_item['namespace'] == 'kube-system':
+                        raise CaasValidationError(
+                            'You can\'t set "kube-system" as namespace in "{}"!'.format(
+                                self.LOG_FORWARDING))
+                    self.caas_utils.check_key_in_dict('target_url', list_item)
+                    if not list_item['target_url'] or not re.match(self.URL_PORT_PATTERN,
+                                                                   list_item['target_url']):
+                        raise CaasValidationError(
+                            '"target_url" property {} not valid!'.format(list_item['target_url']))
+                    if not url_d:
+                        url_d[list_item['namespace']] = list_item['target_url']
+                    if list_item['namespace'] in url_d:
+                        if list_item['target_url'] in url_s:
+                            raise CaasValidationError('There can\'t be multiple rules for the same '
+                                                      'target_url for the same {} '
+                                                      'namespace!'.format(list_item['namespace']))
+                        else:
+                            url_s.add(list_item['target_url'])
+                        url_d[list_item['namespace']] = url_s
+                    else:
+                        url_d[list_item['namespace']] = list_item['target_url']
+                    if self.caas_utils.is_optional_param_present('plugin', list_item) and list_item[
+                        'plugin'] not in self.FLUENTD_PLUGINS:
+                        raise CaasValidationError(
+                            '"plugin" property not valid! Choose from {}'.format(
+                                self.FLUENTD_PLUGINS))
+                    if self.caas_utils.is_optional_param_present('stream', list_item) and list_item[
+                        'stream'] not in self.LOG_FW_STREAM:
+                        raise CaasValidationError(
+                            '"stream" property not valid! Choose from {}'.format(
+                                self.LOG_FW_STREAM))
 
     def validate_networks(self, props):
         caas_nets = []
