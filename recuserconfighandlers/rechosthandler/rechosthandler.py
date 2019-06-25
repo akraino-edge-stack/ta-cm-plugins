@@ -34,5 +34,5 @@ class rechosthandler(cmuserconfig.CMUserConfigPlugin):
 
     def _set_default_memory(self, confman):
         hostconf = confman.get_hosts_config_handler()
-        hostconf.set_default_reserved_memory_to_all_hosts(default_middleware_reserved_memory)
+        hostconf.set_default_reserved_memory_to_all_hosts(self.default_middleware_reserved_memory)
 
