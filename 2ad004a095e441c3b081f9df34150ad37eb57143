@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3ef8cd2_fbf1d81d",
+        "filename": "recuserconfighandlers/recinfraloghandler/recinfraloghandler.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 183
+      },
+      "writtenOn": "2019-06-26T07:43:43Z",
+      "side": 1,
+      "message": "could you make it a little bit more generic, i.e. reccaashandler?\nI think it is better to have one plugin per domain, rather than one plugin per config parameter\ninside the handle calling log related handling can be one function, but we can add more in the future per need",
+      "revId": "2ad004a095e441c3b081f9df34150ad37eb57143",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    }
+  ]
+}
