@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ae94730_85ecf182",
+        "filename": "recuserconfighandlers/reccaashandler/reccaashandler.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 43
+      },
+      "writtenOn": "2019-06-27T10:31:07Z",
+      "side": 1,
+      "message": "I can\u0027t say whether this is correct, but at least I see that the get_caas_config_handler is defined. Is it supposed to just return None? Or is it supposed to be overridden by a subclass somewhere?\n\nI see in configmanager.py this method simply returns None. So I would think that line 41 is going to result in\n\n AttributeError: \u0027NoneType\u0027 object has no attribute \u0027get_caas_parameter\u0027",
+      "revId": "151ccada5b85e9f80308fba8a54d9f83c239de6c",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
