@@ -22,10 +22,10 @@ from cmdatahandlers.api import validation
 
 class VersionValidation(cmvalidator.CMValidator):
     domain = 'cloud.version'
-    version = [2, 0, 2]
+    version = [2, 0, 3]
 
     # Should be same as 'version' in release build
-    devel_version = [2, 0, 2]
+    devel_version = [2, 0, 3]
 
     # Example:
     # {1: 'This is the first change requiring new template version (1.1.0)',
