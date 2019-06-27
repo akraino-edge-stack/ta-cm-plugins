@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4864fea2_4a4b55bf",
+        "filename": "recuserconfighandlers/reccaashandler/reccaashandler.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 43
+      },
+      "writtenOn": "2019-06-27T17:52:54Z",
+      "side": 1,
+      "message": "Is there a specific reason to change this class name back to all lowercase?\n\nI certainly don\u0027t advocate going through a legacy codebase and doing a bunch of PEP8-only commits. But I would expect new code to be PEP8 by default unless there\u0027s a written style guide documenting where the project intentionally deviates from PEP8 and I would advocate for fixing style issues in passing when touching the code for other reasons.",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "b22ffce0c73072460b5448924d897e101790c9f8",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
