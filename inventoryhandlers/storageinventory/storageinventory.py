@@ -1319,7 +1319,8 @@ class storageinventory(cmansibleinventoryconfig.CMAnsibleInventoryConfigPlugin):
         hwmgmt_addr = self._hosts_config_handler.get_hwmgmt_ip(name)
         hwmgmt_user = self._hosts_config_handler.get_hwmgmt_user(name)
         hwmgmt_pass = self._hosts_config_handler.get_hwmgmt_password(name)
-        return hw.get_hw_type(hwmgmt_addr, hwmgmt_user, hwmgmt_pass)
+        hwmgmt_priv_level = self._hosts_config_handler.get_hwmgmt_priv_level(name)
+        return hw.get_hw_type(hwmgmt_addr, hwmgmt_user, hwmgmt_pass, hwmgmt_priv_level)
 
     @staticmethod
     def _get_os_disk(hw_type):
