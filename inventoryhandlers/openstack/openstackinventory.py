@@ -1137,6 +1137,7 @@ class Host:
         self.hwmgmt_address = None
         self.hwmgmt_password = None
         self.hwmgmt_user = None
+        self.hwmgmt_priv_level = 'ADMINISTRATOR'
         self.mgmt_mac = None
         self.is_performance = False
         self.os_max_threads = 16
@@ -1427,6 +1428,7 @@ class openstackinventory(cmansibleinventoryconfig.CMAnsibleInventoryConfigPlugin
         host.hwmgmt_address = hostsconf.get_hwmgmt_ip(name)
         host.hwmgmt_user = hostsconf.get_hwmgmt_user(name)
         host.hwmgmt_password = hostsconf.get_hwmgmt_password(name)
+        host.hwmgmt_priv_level = hostsconf.get_hwmgmt_priv_level(name)
         host.mgmt_mac = hostsconf.get_mgmt_mac(name)
 
 

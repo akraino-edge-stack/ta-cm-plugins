@@ -403,12 +403,22 @@ class HostsValidation(cmvalidator.CMValidator):
                                                  (attribute, profile, host))
 
     def validate_hwmgmt(self, hwmgmt, host):
+        # this list may not be comprehensive, but it matches ironic's idea
+        # of valid privileges.  In practice, we'll likely only see OPERATOR
+        # and ADMINISTRATOR.  Case seems to matter here.
+        valid_ipmi_priv = ['USER', 'CALLBACK', 'OPERATOR', 'ADMINISTRATOR']
+
         if not hwmgmt:
             raise validation.ValidationError('Missing hwmgmt configuration for %s' % host)
         if not hwmgmt.get('user'):
             raise validation.ValidationError('Missing hwmgmt username for %s' % host)
         if not hwmgmt.get('password'):
             raise validation.ValidationError('Missing hwmgmt password for %s' % host)
+        priv_level = hwmgmt.get('priv_level')
+        if priv_level and priv_level not in valid_ipmi_priv:
+            # priv_level is optional, but should be in the valid range.
+            raise validation.ValidationError('Invalid IPMI privilege level %s for %s' %
+                                             (priv_level, host))
         validationutils = validation.ValidationUtils()
         validationutils.validate_ip_address(hwmgmt.get('address'))
 

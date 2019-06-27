@@ -96,6 +96,7 @@ class zbaremetalnodeinventory(cmansibleinventoryconfig.CMAnsibleInventoryConfigP
 
     def handle(self):
         usersconf = self.confman.get_users_config_handler()
+        hostsconf = self.confman.get_hosts_config_handler()
         admin_user = usersconf.get_admin_user()
         self.add_global_var("home_dir", "/home/" + admin_user)
         all_vars = self.inventory['all']['vars']
@@ -177,6 +178,7 @@ class zbaremetalnodeinventory(cmansibleinventoryconfig.CMAnsibleInventoryConfigP
                 power["ipmi_address"] = all_vars['hosts'][host]['hwmgmt']['address']
                 power["ipmi_password"] = all_vars['hosts'][host]['hwmgmt']['password']
                 power["ipmi_username"] = all_vars['hosts'][host]['hwmgmt']['user']
+                power["ipmi_priv_level"] = hostsconf.get_hwmgmt_priv_level(host)
                 power["product_family"] = all_vars['hw_inventory_details'][host]['product_family']
                 power["vendor"] = all_vars['hw_inventory_details'][host]['vendor']
 
