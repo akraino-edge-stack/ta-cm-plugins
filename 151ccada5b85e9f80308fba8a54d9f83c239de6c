@@ -16,6 +16,24 @@
       "revId": "151ccada5b85e9f80308fba8a54d9f83c239de6c",
       "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10273677_10bef3e3",
+        "filename": "recuserconfighandlers/reccaashandler/reccaashandler.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 186
+      },
+      "writtenOn": "2019-06-27T10:48:53Z",
+      "side": 1,
+      "message": "These methods are dynamically created based on the available datahandlers. The following line assembles the function name: https://gerrit.akraino.org/r/gitweb?p\u003dta/config-manager.git;a\u003dblob;f\u003dcmdatahandlers/src/cmdatahandlers/api/configmanager.py;h\u003de4aa72d470c8359288e34b50f35ba168e4b03c93;hb\u003dHEAD#l99\nThese methods return an instance of the datahandler classes: https://gerrit.akraino.org/r/gitweb?p\u003dta/config-manager.git;a\u003dtree;f\u003dcmdatahandlers/src/cmdatahandlers;hb\u003dHEAD so with them you can interact with the CM framework.",
+      "parentUuid": "6ae94730_85ecf182",
+      "revId": "151ccada5b85e9f80308fba8a54d9f83c239de6c",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
     }
   ]
 }
