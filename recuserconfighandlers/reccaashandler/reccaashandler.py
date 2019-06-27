@@ -37,6 +37,6 @@ class reccaashandler(cmuserconfig.CMUserConfigPlugin):
     @staticmethod
     def _set_default_infra_log_store(confman):
         root = 'cloud.caas'
-        log_conf = confman.get_caas_handler()
+        log_conf = confman.get_caas_config_handler()
         if not log_conf.get_caas_parameter('infra_log_store'):
             log_conf.config[root]['infra_log_store'] = 'elasticsearch'
