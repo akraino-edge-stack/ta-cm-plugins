@@ -177,6 +177,7 @@ class zbaremetalnodeinventory(cmansibleinventoryconfig.CMAnsibleInventoryConfigP
                 power["ipmi_address"] = all_vars['hosts'][host]['hwmgmt']['address']
                 power["ipmi_password"] = all_vars['hosts'][host]['hwmgmt']['password']
                 power["ipmi_username"] = all_vars['hosts'][host]['hwmgmt']['user']
+                power["ipmi_priv_level"] = all_vars['hosts'][host]['hwmgmt']['priv_level']
                 power["product_family"] = all_vars['hw_inventory_details'][host]['product_family']
                 power["vendor"] = all_vars['hw_inventory_details'][host]['vendor']
 
