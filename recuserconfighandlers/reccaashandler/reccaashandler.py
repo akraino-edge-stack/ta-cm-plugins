@@ -23,10 +23,10 @@ its sole purpose is to set the default plugin (elasticsearch) for internal loggi
 """
 
 
-class reccaashandler(cmuserconfig.CMUserConfigPlugin):
+class RecCaasHandler(cmuserconfig.CMUserConfigPlugin):
 
     def __init__(self):
-        super(reccaashandler, self).__init__()
+        super(RecCaasHandler, self).__init__()
 
     def handle(self, confman):
         try:
@@ -37,6 +37,6 @@ class reccaashandler(cmuserconfig.CMUserConfigPlugin):
     @staticmethod
     def _set_default_infra_log_store(confman):
         root = 'cloud.caas'
-        log_conf = confman.get_caas_handler()
+        log_conf = confman.get_caas_config_handler()
         if not log_conf.get_caas_parameter('infra_log_store'):
             log_conf.config[root]['infra_log_store'] = 'elasticsearch'
