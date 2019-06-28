@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7ed78ad_3b8f113b",
+        "filename": "validators/src/HostsValidation.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 192
+      },
+      "writtenOn": "2019-06-28T15:04:35Z",
+      "side": 1,
+      "message": "In user config priv_level is optional, but can the value be empty (or missing) in configuration when the validator is run?\nAs this is validating the configuration, it would be better just to check that the configuration is as expected (i.e. accept the empty value if it is ok)",
+      "range": {
+        "startLine": 419,
+        "startChar": 8,
+        "endLine": 419,
+        "endChar": 64
+      },
+      "revId": "adf4dfde52f31d9033ceed647d11d1d2b1a232f5",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    }
+  ]
+}
