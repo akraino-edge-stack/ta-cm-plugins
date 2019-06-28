@@ -22,6 +22,30 @@
       "revId": "adf4dfde52f31d9033ceed647d11d1d2b1a232f5",
       "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da5cd88d_ea7c0761",
+        "filename": "validators/src/HostsValidation.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 180
+      },
+      "writtenOn": "2019-06-28T15:13:37Z",
+      "side": 1,
+      "message": "hmm.  That conflicts a little with Krisztián\u0027s suggestion here to use a default:\n\nhttps://gerrit.akraino.org/r/c/ta/cm-plugins/+/1078/3/validators/src/HostsValidation.py#418\n\ni\u0027ve got no preference one way or the other, but given that the code that actually uses this value always assigns the default value \u0027ADMINISTRATOR\u0027, this seems to more precisely match reflect that.",
+      "parentUuid": "a7ed78ad_3b8f113b",
+      "range": {
+        "startLine": 419,
+        "startChar": 8,
+        "endLine": 419,
+        "endChar": 64
+      },
+      "revId": "adf4dfde52f31d9033ceed647d11d1d2b1a232f5",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
     }
   ]
 }
