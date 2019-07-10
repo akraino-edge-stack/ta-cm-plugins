@@ -46,6 +46,30 @@
       "revId": "83c6a367816ae0897fcc4b941ffcc9216bfc998a",
       "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dafa9ced_917c1e16",
+        "filename": "inventoryhandlers/openstack/openstackinventory.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 1431,
+      "author": {
+        "id": 180
+      },
+      "writtenOn": "2019-07-10T15:43:31Z",
+      "side": 1,
+      "message": "OK, new change in flight to fix the ansible tasks:\n\nhttps://gerrit.akraino.org/r/c/ta/infra-ansible/+/1160",
+      "parentUuid": "40969232_34f42879",
+      "range": {
+        "startLine": 1431,
+        "startChar": 8,
+        "endLine": 1431,
+        "endChar": 70
+      },
+      "revId": "83c6a367816ae0897fcc4b941ffcc9216bfc998a",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
     }
   ]
 }
