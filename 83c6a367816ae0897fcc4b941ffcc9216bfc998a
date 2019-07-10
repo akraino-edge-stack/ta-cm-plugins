@@ -22,6 +22,30 @@
       "revId": "83c6a367816ae0897fcc4b941ffcc9216bfc998a",
       "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40969232_34f42879",
+        "filename": "inventoryhandlers/openstack/openstackinventory.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 1431,
+      "author": {
+        "id": 180
+      },
+      "writtenOn": "2019-07-10T15:18:25Z",
+      "side": 1,
+      "message": "Hmm. I\u0027m curious thing about that: that file doesn\u0027t explicitly mention the _other_ hwmgmt values (user and password in particular).  Why would it need to mention priv_level?  However, you\u0027re definitely on to something: there are a few other places in ta/infra-ansible where hwmgmt values ARE referenced: roles/baremetal_provision/tasks/*_console_logging.yml and roles/initial_poweroff_hosts/tasks/poweroff_real_nodes.yml.  I\u0027ll make a new change for those guys.\n\nThis tiny change is turning into a remarkable spelunking expedition.",
+      "parentUuid": "fba431da_d54e3858",
+      "range": {
+        "startLine": 1431,
+        "startChar": 8,
+        "endLine": 1431,
+        "endChar": 70
+      },
+      "revId": "83c6a367816ae0897fcc4b941ffcc9216bfc998a",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
     }
   ]
 }
