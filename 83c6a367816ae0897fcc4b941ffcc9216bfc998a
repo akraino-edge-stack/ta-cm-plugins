@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fba431da_d54e3858",
+        "filename": "inventoryhandlers/openstack/openstackinventory.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 1431,
+      "author": {
+        "id": 187
+      },
+      "writtenOn": "2019-07-10T15:03:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure that it is enough to add this here. This info should be also part of the ironic\u0027s driver_info variable. The ironic virtmedia driver uses the ipmitool module from ironic which would look for the priv_level key in the driver_info variable when calling the ipmitool shell command: \nhttps://github.com/openstack/ironic/blob/246b86615789f7f926b7df58aee9a1fb24a2f80d/ironic/drivers/modules/ipmitool.py#L401\nSo I think you need to also modify this file:\nhttps://gerrit.akraino.org/r/gitweb?p\u003dta/infra-ansible.git;a\u003dblob;f\u003droles/baremetal_provision/tasks/ironic_nodes_create.yml;h\u003dfff4f11cafe0952f6c6107aecf0d0b543ddda9b2;hb\u003drefs/heads/master",
+      "range": {
+        "startLine": 1431,
+        "startChar": 8,
+        "endLine": 1431,
+        "endChar": 70
+      },
+      "revId": "83c6a367816ae0897fcc4b941ffcc9216bfc998a",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    }
+  ]
+}
