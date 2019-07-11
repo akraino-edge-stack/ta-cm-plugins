@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0464559e_7040f3b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 43
+      },
+      "writtenOn": "2019-07-11T11:02:55Z",
+      "side": 1,
+      "message": "You should really include full URLs because those numbers can\u0027t be used unless someone already knows which repos they are in. Just changing the 1078 in this change\u0027s URL to 1076 or 1077 won\u0027t resolve to the correct changes.",
+      "range": {
+        "startLine": 15,
+        "startChar": 31,
+        "endLine": 15,
+        "endChar": 44
+      },
+      "revId": "971d23e3067c77a301918c01132241512bc5a2d0",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b105950_08d55c66",
+        "filename": "inventoryhandlers/hwinventory/hwinventory.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 43
+      },
+      "writtenOn": "2019-07-11T11:02:55Z",
+      "side": 1,
+      "message": "Maybe remove the whitespace (that was in the original file, not added by you) just to make Gerrit stop seeing red.",
+      "revId": "971d23e3067c77a301918c01132241512bc5a2d0",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
