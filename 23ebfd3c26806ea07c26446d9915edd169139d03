@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ffdad64_fc0dbf8f",
+        "filename": "inventoryhandlers/baremetal-node-inventory/zbaremetalnodeinventory.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 186
+      },
+      "writtenOn": "2019-07-15T08:39:24Z",
+      "side": 1,
+      "message": "I believe here you should to use `get_hwmgmt_priv_level` method from the hosts cmdatahandler. You made this optional, and `get_hwmgmt_priv_level` can handle the absence of this config. This code would fail if `priv_level` is missing userconfig.",
+      "range": {
+        "startLine": 180,
+        "startChar": 43,
+        "endLine": 180,
+        "endChar": 90
+      },
+      "revId": "23ebfd3c26806ea07c26446d9915edd169139d03",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc62251_eff6300d",
+        "filename": "validators/src/HostsValidation.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 186
+      },
+      "writtenOn": "2019-07-15T08:39:24Z",
+      "side": 1,
+      "message": "Since `priv_level` is optional, this code would fail if it\u0027s missing from userconfig. Please run validation only if `priv_level` exists, or add a default value for the getter. https://docs.python.org/2/library/stdtypes.html#dict.get",
+      "range": {
+        "startLine": 417,
+        "startChar": 21,
+        "endLine": 417,
+        "endChar": 45
+      },
+      "revId": "23ebfd3c26806ea07c26446d9915edd169139d03",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    }
+  ]
+}
