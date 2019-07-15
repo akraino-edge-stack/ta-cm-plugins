@@ -117,6 +117,30 @@
       "revId": "23ebfd3c26806ea07c26446d9915edd169139d03",
       "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7cf9100_11cb35f1",
+        "filename": "validators/src/HostsValidation.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 180
+      },
+      "writtenOn": "2019-07-15T13:04:18Z",
+      "side": 1,
+      "message": "this shouldn\u0027t fail, right?  get() will return None, which is the first case in the next line — the next line validates that the value is either unset or is a valid priv_level, either of which should pass.",
+      "parentUuid": "5bc62251_eff6300d",
+      "range": {
+        "startLine": 417,
+        "startChar": 21,
+        "endLine": 417,
+        "endChar": 45
+      },
+      "revId": "23ebfd3c26806ea07c26446d9915edd169139d03",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
     }
   ]
 }
