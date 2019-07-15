@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2151904c_5e4bc6f0",
+        "filename": "inventoryhandlers/baremetal-node-inventory/zbaremetalnodeinventory.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 43
+      },
+      "writtenOn": "2019-07-15T10:54:30Z",
+      "side": 1,
+      "message": "This reminds me of something that I thought of before but never captured in Jira. I believe we do not have a user_config validation tool. Is that correct? Not that it would matter for an optional parameter, but if we don\u0027t already have one, I would like to add a Jira story for future development of a tool that someone can run on their local machine to check user_config.yaml for errors before they start a new installation.",
+      "parentUuid": "3ffdad64_fc0dbf8f",
+      "range": {
+        "startLine": 180,
+        "startChar": 43,
+        "endLine": 180,
+        "endChar": 90
+      },
+      "revId": "23ebfd3c26806ea07c26446d9915edd169139d03",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bc62251_eff6300d",
         "filename": "validators/src/HostsValidation.py",
         "patchSetId": 8
