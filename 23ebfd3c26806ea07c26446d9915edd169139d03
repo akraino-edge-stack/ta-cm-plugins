@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "bfaa7f1a_7fca0806",
+        "filename": "inventoryhandlers/baremetal-node-inventory/zbaremetalnodeinventory.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 183
+      },
+      "writtenOn": "2019-07-15T11:05:49Z",
+      "side": 1,
+      "message": "we do have validation, but that is part of the CMFramework.\nI believe you mean an offline validator? Yes, we don\u0027t have that.\nBut it need to basically contain, and call the existing CM frameworks validation API, because that\u0027s where all the checks are coded, it won\u0027t be a \"standalone\" binary\nit is possible though. we did a PoC like this with a GUI: UC generator + validator",
+      "parentUuid": "2151904c_5e4bc6f0",
+      "range": {
+        "startLine": 180,
+        "startChar": 43,
+        "endLine": 180,
+        "endChar": 90
+      },
+      "revId": "23ebfd3c26806ea07c26446d9915edd169139d03",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bc62251_eff6300d",
         "filename": "validators/src/HostsValidation.py",
         "patchSetId": 8
