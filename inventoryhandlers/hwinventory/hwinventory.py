@@ -61,7 +61,7 @@ class hwinventory(cmansibleinventoryconfig.CMAnsibleInventoryConfigPlugin):
         self._set_hw_types()
         self._add_hw_config()
 
-    
+
     def _add_hw_config(self):
         try:
             text = Environment().from_string(JSON_HW_HOST_VAR).render(
@@ -78,8 +78,9 @@ class hwinventory(cmansibleinventoryconfig.CMAnsibleInventoryConfigPlugin):
         hwmgmt_addr = self._hosts_config_handler.get_hwmgmt_ip(name)
         hwmgmt_user = self._hosts_config_handler.get_hwmgmt_user(name)
         hwmgmt_pass = self._hosts_config_handler.get_hwmgmt_password(name)
-        return hw.get_hw_data(hwmgmt_addr, hwmgmt_user, hwmgmt_pass)
-        
+        hwmgmt_priv_level = self._hosts_config_handler.get_hwmgmt_priv_level(name)
+        return hw.get_hw_data(hwmgmt_addr, hwmgmt_user, hwmgmt_pass, hwmgmt_priv_level)
+
     def _set_hw_types(self):
         hosts = self._hosts_config_handler.get_hosts()
         for host in hosts:
@@ -88,4 +89,4 @@ class hwinventory(cmansibleinventoryconfig.CMAnsibleInventoryConfigPlugin):
             host_object.vendor = hw_details.get("vendor", "Unknown")
             host_object.product_family = hw_details.get("product_family", "Unknown")
             host_object.mgmt_mac = hw_details.get('info', {}).get("MAC Address", "00:00:00:00:00:00")
-            self.host_objects.append(host_object) 
+            self.host_objects.append(host_object)
