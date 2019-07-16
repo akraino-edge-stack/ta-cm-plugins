@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "02141815_a88021d3",
+        "filename": "inventoryhandlers/baremetal-node-inventory/zbaremetalnodeinventory.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 186
+      },
+      "writtenOn": "2019-07-16T07:58:08Z",
+      "side": 1,
+      "message": "Ok.",
+      "parentUuid": "cceee0f0_11f10fb1",
+      "range": {
+        "startLine": 180,
+        "startChar": 43,
+        "endLine": 180,
+        "endChar": 90
+      },
+      "revId": "23ebfd3c26806ea07c26446d9915edd169139d03",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bc62251_eff6300d",
         "filename": "validators/src/HostsValidation.py",
         "patchSetId": 8
@@ -141,6 +165,30 @@
       "revId": "23ebfd3c26806ea07c26446d9915edd169139d03",
       "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47135dc5_5611fad5",
+        "filename": "validators/src/HostsValidation.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 186
+      },
+      "writtenOn": "2019-07-16T07:58:08Z",
+      "side": 1,
+      "message": "That\u0027s right, never mind, I just mislead you. :)",
+      "parentUuid": "f7cf9100_11cb35f1",
+      "range": {
+        "startLine": 417,
+        "startChar": 21,
+        "endLine": 417,
+        "endChar": 45
+      },
+      "revId": "23ebfd3c26806ea07c26446d9915edd169139d03",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
     }
   ]
 }
