@@ -18,21 +18,26 @@ from cmframework.apis import cmerror
 from cmdatahandlers.api import configerror
 
 """
-This plugin is used to handle REC specific host configs. Currently
-its sole purpuse is to set default middleware reserved memory.
+This plugin is used to handle REC specific host configs, including
+setting default middleware reserved memory and populating default
+IPMI privileges.
 """
 
 
 class rechosthandler(cmuserconfig.CMUserConfigPlugin):
     default_middleware_reserved_memory = '4Gi'
-
+    default_ipmi_priv_level = 'ADMINISTRATOR'
+    
     def __init__(self):
         super(rechosthandler, self).__init__()
 
     def handle(self, confman):
-        self._set_default_memory(confman)
-
-    def _set_default_memory(self, confman):
         hostconf = confman.get_hosts_config_handler()
+        self._set_default_memory(hostconf)
+        self._set_default_ipmi_priv(hostconf)
+
+    def _set_default_memory(self, hostconf):
         hostconf.set_default_reserved_memory_to_all_hosts(self.default_middleware_reserved_memory)
 
+    def _set_default_ipmi_priv(self, hostconf):
+        hostconf.set_default_ipmi_priv_level_to_all_hosts(self.default_ipmi_priv_level)
