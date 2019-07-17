@@ -25,14 +25,19 @@ its sole purpuse is to set default middleware reserved memory.
 
 class rechosthandler(cmuserconfig.CMUserConfigPlugin):
     default_middleware_reserved_memory = '4Gi'
-
+    default_ipmi_priv_level = 'ADMINISTRATOR'
+    
     def __init__(self):
         super(rechosthandler, self).__init__()
 
     def handle(self, confman):
         self._set_default_memory(confman)
+        self._set_default_ipmi_priv(confman)
 
     def _set_default_memory(self, confman):
         hostconf = confman.get_hosts_config_handler()
         hostconf.set_default_reserved_memory_to_all_hosts(self.default_middleware_reserved_memory)
 
+    def _set_default_ipmi_priv(self, confman):
+        hostconf = confman.get_hosts_config_handler()
+        hostconf.set_default_ipmi_priv_level_to_all_hosts(self.default_ipmi_priv_level)
