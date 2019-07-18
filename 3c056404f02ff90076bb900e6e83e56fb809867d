@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4728fb37_0a943e56",
+        "filename": "recuserconfighandlers/rechosthandler/rechosthandler.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 183
+      },
+      "writtenOn": "2019-07-18T14:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89e67a5a_a9e29f75",
+      "revId": "3c056404f02ff90076bb900e6e83e56fb809867d",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a8e36ff_a952484b",
         "filename": "recuserconfighandlers/rechosthandler/rechosthandler.py",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "3c056404f02ff90076bb900e6e83e56fb809867d",
       "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8eda69b_6ab284b9",
+        "filename": "recuserconfighandlers/rechosthandler/rechosthandler.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 183
+      },
+      "writtenOn": "2019-07-18T14:35:21Z",
+      "side": 1,
+      "message": "yeah, LGTM. just waiting for the other review to pass verification",
+      "parentUuid": "02daf3e5_be1ab324",
+      "revId": "3c056404f02ff90076bb900e6e83e56fb809867d",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
     }
   ]
 }
