@@ -33,6 +33,24 @@
       "revId": "3c056404f02ff90076bb900e6e83e56fb809867d",
       "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02daf3e5_be1ab324",
+        "filename": "recuserconfighandlers/rechosthandler/rechosthandler.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 180
+      },
+      "writtenOn": "2019-07-18T13:10:02Z",
+      "side": 1,
+      "message": "kinda took a halfway-solution and just fetched the hostconf in handle().  hopefully that\u0027s ok.",
+      "parentUuid": "2a8e36ff_a952484b",
+      "revId": "3c056404f02ff90076bb900e6e83e56fb809867d",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
     }
   ]
 }
