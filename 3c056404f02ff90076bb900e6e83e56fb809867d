@@ -87,6 +87,24 @@
       "revId": "3c056404f02ff90076bb900e6e83e56fb809867d",
       "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab6f1be4_a4402827",
+        "filename": "recuserconfighandlers/rechosthandler/rechosthandler.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 186
+      },
+      "writtenOn": "2019-07-19T09:07:34Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t know if it is a singleton or we always create a new object, but we could set the hosts_config_handler into the class as a member, and then everyone could use the same instance\njust a small cosmetic stuff\n\nThere should be only one instance of cmdatahandlers instantiated by CM.",
+      "parentUuid": "d8eda69b_6ab284b9",
+      "revId": "3c056404f02ff90076bb900e6e83e56fb809867d",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
     }
   ]
 }
