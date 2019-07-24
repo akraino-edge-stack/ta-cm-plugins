@@ -1505,7 +1505,7 @@ class openstackinventory(cmansibleinventoryconfig.CMAnsibleInventoryConfigPlugin
         self.general.password = usersconf.get_admin_user_password()
         caas_conf = self.confman.get_caas_config_handler()
         if caas_conf.get_caas_only():
-          self.general.openstack_password = usersconf.get_admin_password()
+          self.general.openstack_password = caas_conf.get_admin_password()
         else:
           openstackconfighandler = self.confman.get_openstack_config_handler()
           self.general.openstack_password = openstackconfighandler.get_admin_password()
