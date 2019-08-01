@@ -100,6 +100,9 @@ class CaasValidation(cmvalidator.CMValidator):
     INFRA_LOG_FLUENTD_PLUGINS = ['elasticsearch', 'remote_syslog']
     LOG_FW_STREAM = ['stdout', 'stderr', 'both']
 
+    DOMAIN_NAME = "dns_domain"
+    DOMAIN_NAME_PATTERN = r"^[a-z0-9]([a-z0-9-\.]{0,253}[a-z0-9])?$"
+
     def __init__(self):
         cmvalidator.CMValidator.__init__(self)
         self.validation_utils = validation.ValidationUtils()
@@ -124,6 +127,7 @@ class CaasValidation(cmvalidator.CMValidator):
         self.validate_encrypted_ca(self.ENCRYPTED_CA_KEY)
         self.validate_log_forwarding()
         self.validate_networks(props)
+        self.validate_dns_domain()
 
     def _get_conf(self, props, domain):
         if props.get(domain):
@@ -281,25 +285,80 @@ class CaasValidation(cmvalidator.CMValidator):
                         ('caas_master' in host_conf[self.SERV_PROF] and
                          'compute' not in host_conf[self.SERV_PROF])):
                     # Validating CaaS network 'net' mapping in 'host'
-                    is_caas_network_present = False
                     profiles = host_conf.get('network_profiles')
                     if isinstance(profiles, list) and profiles:
                         net_prof = netprof_conf.get(profiles[0])
                     if net_prof is not None:
                         ifaces = net_prof.get('provider_network_interfaces', {})
-                        for iface, data in ifaces.iteritems():
-                            net_type = data.get('type')
-                            networks = data.get('provider_networks', [])
-                            if net in networks and net_type == 'caas':
-                                is_caas_network_present = True
-                                if net_iface_map[net] is None:
-                                    net_iface_map[net] = iface
-                                elif net_iface_map[net] != iface:
-                                    msg = 'CaaS network {} mapped to interface {} in one host '
-                                    msg += 'and interface {} in another host'
-                                    raise CaasValidationError(msg.format(net, iface,
-                                                                         net_iface_map[net]))
-                                break
-                    if not is_caas_network_present:
-                        raise CaasValidationError('CaaS network {} missing from host {}'
-                                                  .format(net, host))
+                        caas_provider_interfaces = self._filter_provider_networks_by_type(
+                            self._filter_provider_networkinterfaces_by_net(ifaces, net), 'caas')
+                        sriov_networks = net_prof.get('sriov_provider_networks', {})
+                        caas_sriov_networks_present = bool(
+                            net in sriov_networks and
+                            sriov_networks[net].get('type', "") == 'caas')
+                        if not caas_provider_interfaces and not caas_sriov_networks_present:
+                            raise CaasValidationError('CaaS network {} missing from host {}'
+                                                      .format(net, host))
+                        if caas_provider_interfaces:
+                            self._validate_homogenous_provider_net_setup(
+                                net_iface_map, net, ifaces)
+                        if caas_sriov_networks_present:
+                            self._validate_homogenous_sriov_provider_net_setup(
+                                net_iface_map, net, sriov_networks)
+
+    @staticmethod
+    def _filter_provider_networks_by_type(profile, net_type):
+        return {name: network for name, network in profile.iteritems()
+                if network.get('type', "") == net_type}
+
+    @staticmethod
+    def _filter_provider_networkinterfaces_by_net(provider_interfaces, provider_net):
+        return {iface: data for iface, data in provider_interfaces.iteritems()
+                if provider_net in data.get('provider_networks', [])}
+
+    @staticmethod
+    def _validate_homogenous_provider_net_setup(net_iface_map, net, ifaces):
+        is_caas_network_present = False
+        for iface, data in ifaces.iteritems():
+            net_type = data.get('type')
+            networks = data.get('provider_networks', [])
+            if net in networks and net_type == 'caas':
+                is_caas_network_present = True
+                if net_iface_map[net] is None:
+                    net_iface_map[net] = iface
+                elif net_iface_map[net] != iface:
+                    msg = 'CaaS network {} mapped to interface {} in one host '
+                    msg += 'and interface {} in another host'
+                    raise CaasValidationError(msg.format(net, iface,
+                                                         net_iface_map[net]))
+                break
+        return is_caas_network_present
+
+    @staticmethod
+    def _validate_homogenous_sriov_provider_net_setup(net_iface_map, net, sriov_networks):
+        is_caas_network_present = False
+        sriov_provider_net = sriov_networks.get(net, {})
+        if sriov_provider_net and sriov_provider_net.get('type') == 'caas':
+            interfaces = sriov_provider_net.get('interfaces', [])
+            tenant_interfaces = net_iface_map.get(net)
+            already_used_ifaces = [set(x).intersection(interfaces)
+                                   for x in net_iface_map.itervalues()
+                                   if x and isinstance(x, list)]
+            if tenant_interfaces is None and interfaces:
+                net_iface_map[net] = interfaces
+                is_caas_network_present = True
+            elif already_used_ifaces:
+                msg = 'CaaS network {} mapped to sriov interfaces {} in one host '
+                msg += 'and sriov interfaces {} in another host'
+                raise CaasValidationError(msg.format(net, interfaces,
+                                                     tenant_interfaces))
+        return is_caas_network_present
+
+    def validate_dns_domain(self):
+        domain = self.caas_conf[self.DOMAIN_NAME]
+        if not self.caas_utils.is_optional_param_present(self.DOMAIN_NAME, self.caas_conf):
+            return
+        if not re.match(self.DOMAIN_NAME_PATTERN, domain):
+            raise CaasValidationError('{} is not a valid {} !'.format(
+                domain,
+                self.DOMAIN_NAME))
