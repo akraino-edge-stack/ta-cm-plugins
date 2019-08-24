@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96f70cb9_6a9ec59d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 233
+      },
+      "writtenOn": "2019-08-24T02:28:07Z",
+      "side": 1,
+      "message": "missing Signed-off-by",
+      "revId": "e86e577cbe74db425f74be9566d4ca3837d84064",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfddb75_ef6aea3f",
+        "filename": "userconfighandlers/hostoshandler/hostoshandler.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 233
+      },
+      "writtenOn": "2019-08-24T02:28:07Z",
+      "side": 1,
+      "message": "without `nokia.`",
+      "revId": "e86e577cbe74db425f74be9566d4ca3837d84064",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "345f10c5_66dccb0c",
+        "filename": "userconfighandlers/hostoshandler/hostoshandler.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 233
+      },
+      "writtenOn": "2019-08-24T02:28:07Z",
+      "side": 1,
+      "message": "these imports are not used",
+      "revId": "e86e577cbe74db425f74be9566d4ca3837d84064",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    }
+  ]
+}
