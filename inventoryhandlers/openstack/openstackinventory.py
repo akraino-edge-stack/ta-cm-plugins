@@ -37,7 +37,8 @@ json_text_setup = """
                     "keystone_auth_admin_password": "{{ general.openstack_password }}"
                 },
                 "sudo_user": "{{ general.admin }}",
-                "sudo_user_password": "{{ general.password }}"
+                "sudo_user_password": "{{ general.password }}",
+                "sudo_user_authorized_keys": [ {% for key in general.admin_authorized_keys %}"{{ key }}"{% if not loop.last %},{% endif %}{% endfor %} ]
             }
         }
     }
@@ -1098,6 +1099,7 @@ class General:
         self.admin = None
         self.password = None
         self.openstack_password = None
+        self.admin_authorized_keys = []
 
 class Network:
     def __init__(self):
@@ -1509,3 +1511,4 @@ class openstackinventory(cmansibleinventoryconfig.CMAnsibleInventoryConfigPlugin
         else:
           openstackconfighandler = self.confman.get_openstack_config_handler()
           self.general.openstack_password = openstackconfighandler.get_admin_password()
+        self.general.admin_authorized_keys = usersconf.get_admin_user_authorized_keys()
