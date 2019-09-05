@@ -84,6 +84,8 @@ class CaasValidation(cmvalidator.CMValidator):
 
     DOCKER0_CIDR = "docker0_cidr"
 
+    OAM_CIDR = "oam_cidr"
+
     INSTANTIATION_TIMEOUT = "instantiation_timeout"
 
     ENCRYPTED_CA = "encrypted_ca"
@@ -122,6 +124,7 @@ class CaasValidation(cmvalidator.CMValidator):
         self.validate_docker_size_quota()
         self.validate_helm_operation_timeout()
         self.validate_docker0_cidr(props)
+        self.validate_oam_cidr(props)
         self.validate_instantiation_timeout()
         self.validate_encrypted_ca(self.ENCRYPTED_CA)
         self.validate_encrypted_ca(self.ENCRYPTED_CA_KEY)
@@ -169,28 +172,39 @@ class CaasValidation(cmvalidator.CMValidator):
                 '{}:{} is not an integer'.format(self.HELM_OP_TIMEOUT,
                                                  self.caas_conf[self.HELM_OP_TIMEOUT]))
 
-    def get_docker0_cidr_netw_obj(self, subnet):
+    def get_netw_obj(self, subnet, parameter):
         try:
             return ipaddr.IPNetwork(subnet)
         except ValueError as exc:
             raise CaasValidationError('{} is an invalid subnet address: {}'.format(
-                self.DOCKER0_CIDR, exc))
+                parameter, exc))
 
-    def check_docker0_cidr_overlaps_with_netw_subnets(self, docker0_cidr, props):
+    def check_cidr_overlaps_with_netw_subnets(self, cidr_in, props, parameter):
         netw_conf = self._get_conf(props, self.NETW_DOMAIN)
         cidrs = self.caas_utils.get_every_key_occurrence(netw_conf, self.CIDR)
-        for cidr in cidrs:
+        for cidr_in in cidrs:
             if docker0_cidr.overlaps(ipaddr.IPNetwork(cidr)):
                 raise CaasValidationError(
                     'CIDR configured for {} shall be an unused IP range, '
-                    'but it overlaps with {} from {}.'.format(self.DOCKER0_CIDR, cidr,
+                    'but it overlaps with {} from {}.'.format(parameter, cidr,
                                                               self.NETW_DOMAIN))
+    def check_oam_cidr_prefix(self, cidr_obj):
+        if ipaddr.IPNetwork(cidr_obj).prefixlen != 16:
+            raise CaasValidationError('Wrong subnet size in oam_cidr parameter. '
+                                      'The currently supported subnet size is 16')
 
     def validate_docker0_cidr(self, props):
         if not self.caas_utils.is_optional_param_present(self.DOCKER0_CIDR, self.caas_conf):
             return
-        docker0_cidr_obj = self.get_docker0_cidr_netw_obj(self.caas_conf[self.DOCKER0_CIDR])
-        self.check_docker0_cidr_overlaps_with_netw_subnets(docker0_cidr_obj, props)
+        docker0_cidr_obj = self.get_netw_obj(self.caas_conf[self.DOCKER0_CIDR], self.DOCKER0_CIDR)
+        self.check_cidr_overlaps_with_netw_subnets(docker0_cidr_obj, props, self.DOCKER0_CIDR)
+
+    def validate_oam_cidr(self, props):
+        if not self.caas_utils.is_optional_param_present(self.OAM_CIDR, self.caas_conf):
+            return
+        oam_cidr_obj = self.get_netw_obj(self.caas_conf[self.OAM_CIDR], self.OAM_CIDR)
+        self.check_cidr_overlaps_with_netw_subnets(oam_cidr_obj, props, self.OAM_CIDR)
+        self.check_oam_cidr_prefix(oam_cidr_obj)
 
     def validate_instantiation_timeout(self):
         if not self.caas_utils.is_optional_param_present(self.INSTANTIATION_TIMEOUT,
