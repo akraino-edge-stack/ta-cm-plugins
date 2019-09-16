@@ -43,6 +43,7 @@ class HostsValidation(cmvalidator.CMValidator):
     performance_profile_attr = 'cloud.performance_profiles'
     networking_attr = 'cloud.networking'
     MIN_PASSWORD_LENGTH = 8
+    caas_service_profiles = (caas_master_profile, caas_worker_profile)
 
     def get_subscription_info(self):
         logging.debug('get_subscription info called')
@@ -97,6 +98,8 @@ class HostsValidation(cmvalidator.CMValidator):
 
                 self.validate_network_ranges(host_dict, net_profile_dict, networking_dict)
 
+                is_caas_oam_mapped_on_any_hosts = False
+
                 for host_name, host_data in host_dict.iteritems():
                     attr = 'network_profiles'
                     profiles = host_data.get(attr)
@@ -144,6 +147,14 @@ class HostsValidation(cmvalidator.CMValidator):
                         if not self.network_is_mapped(value_dict.get(profile_name), subnet_name) \
                                 and self.is_ceph_profile(storage_profile_config,
                                                          storage_profile_list):
+                            raise validation.ValidationError('%s is not mapped for %s' %
+                                                             (subnet_name, host_name))
+
+                    if self.is_host_caas_node(host_data):
+                        subnet_name = 'caas_oam'
+                        if self.network_is_mapped(value_dict.get(profile_name), subnet_name):
+                            is_caas_oam_mapped_on_any_hosts = True
+                        elif is_caas_oam_mapped_on_any_hosts:
                             raise validation.ValidationError('%s is not mapped for %s' %
                                                              (subnet_name, host_name))
 
@@ -562,6 +573,9 @@ class HostsValidation(cmvalidator.CMValidator):
             if backend == ceph:
                 return True
         return False
+
+    def is_host_caas_node(self, host):
+        return bool(set(self.caas_service_profiles).intersection(host['service_profiles']))
 
     def _get_type_of_nodes(self, nodetype, config):
         nodes = [k for k, v in config.iteritems() if nodetype in v['service_profiles']]
