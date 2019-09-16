@@ -40,9 +40,11 @@ class NetworkingValidation(cmvalidator.CMValidator):
     INFRA_EXTERNAL = 'infra_external'
     INFRA_INTERNAL = 'infra_internal'
     INFRA_STORAGE_CLUSTER = 'infra_storage_cluster'
+    CAAS_OAM = 'caas_oam'
     INFRA_NETWORKS = [INFRA_EXTERNAL,
                       INFRA_INTERNAL,
-                      INFRA_STORAGE_CLUSTER]
+                      INFRA_STORAGE_CLUSTER,
+                      CAAS_OAM]
 
     DNS = 'dns'
     MTU = 'mtu'
@@ -319,6 +321,7 @@ class NetworkingValidation(cmvalidator.CMValidator):
         self.validate_infra_internal()
         self.validate_infra_external()
         self.validate_infra_storage_cluster()
+        self.validate_caas_oam()
         self.validate_no_duplicate_infra_vlans()
 
     def validate_infra_internal(self):
@@ -336,6 +339,11 @@ class NetworkingValidation(cmvalidator.CMValidator):
             self.validate_network_domains(self.INFRA_STORAGE_CLUSTER)
             self.validate_infra_network(self.INFRA_STORAGE_CLUSTER)
             self.validate_no_gateway(self.INFRA_STORAGE_CLUSTER)
+
+    def validate_caas_oam(self):
+        if self.network_exists(self.CAAS_OAM):
+            self.validate_infra_network(self.CAAS_OAM)
+            self.validate_gateway(self.CAAS_OAM)
 
     def validate_infra_network(self, network, vlan_must_exist=False):
         self.validate_mtu(self.net_conf, network)
