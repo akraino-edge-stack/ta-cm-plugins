@@ -20,7 +20,6 @@ from cmframework.apis import cmvalidator
 
 
 class PerformanceProfilesValidation(cmvalidator.CMValidator):
-    DOMAIN = 'cloud.performance_profiles'
     SUBSCRIPTION = r'^cloud\.performance_profiles$'
 
     HUGEPAGESZ = 'hugepagesz'
@@ -31,24 +30,20 @@ class PerformanceProfilesValidation(cmvalidator.CMValidator):
     CAAS_CPU_POOLS = 'caas_cpu_pools'
     CAAS_CPU_POOL_ATTRIBUTES = ['exclusive_pool_percentage', 'shared_pool_percentage']
     CAAS_CPU_POOL_SHARE = 'caas_cpu_pool_share'
-    TUNING = 'tuning'
 
     NUMA0 = 'numa0'
     NUMA1 = 'numa1'
     NUMA_VALUES = [NUMA0, NUMA1]
 
     HUGEPAGESZ_VALUES = ['2M', '1G']
-    TUNING_OPTIONS = ['low_latency', 'standard']
 
     INFO_HUGEPAGESZ = 'Valid values: %s' % HUGEPAGESZ_VALUES
     INFO_HUGEPAGES = 'Must be positive integer'
     INFO_CPUS = 'Must be zero or positive integer'
     INFO_PLATFORM_CPUS = 'Platform requires at least one core from NUMA0'
-    INFO_TUNING = 'Valid tuning options are %s' % TUNING_OPTIONS
 
     ERR_MISSING_DATA = 'Performance profiles validation input does not contain {} data'
     ERR_INVALID_VALUE = 'Invalid %s value in performance profile {}: %s'
-    ERR_INVALID_CONFIG = 'Invalid {} config (not a dict)'
 
     ERR_HUGEPAGESZ = ERR_INVALID_VALUE % (HUGEPAGESZ, INFO_HUGEPAGESZ)
     ERR_DEFAULT_HUGEPAGESZ = ERR_INVALID_VALUE % (DEFAULT_HUGEPAGESZ, INFO_HUGEPAGESZ)
@@ -60,7 +55,6 @@ class PerformanceProfilesValidation(cmvalidator.CMValidator):
     ERR_CPU_POOL_RATIO = 'caas_cpu_pools total cpu percentage exceeded'
     ERR_CAAS_CPU_POOL_TYPE = 'caas_cpu_pools percentage values should be integer'
     ERR_CAAS_DEFAULT_POOL = 'caas_cpu_pool_share value should be integer between 0 and 100'
-    ERR_TUNING = "Invalid %s value in {}. %s" % (TUNING, INFO_TUNING)
 
     @staticmethod
     def raise_error(context, err_type):
@@ -73,13 +67,12 @@ class PerformanceProfilesValidation(cmvalidator.CMValidator):
         conf = self.get_conf(props)
         if isinstance(conf, dict):
             self.validate(conf)
-        elif conf:
-            self.raise_error(self.DOMAIN, self.ERR_INVALID_CONFIG)
 
     def get_conf(self, props):
-        if not isinstance(props, dict) or self.DOMAIN not in props:
-            self.raise_error(self.DOMAIN, self.ERR_MISSING_DATA)
-        return json.loads(props[self.DOMAIN])
+        domain = 'cloud.performance_profiles'
+        if not isinstance(props, dict) or domain not in props:
+            self.raise_error(domain, self.ERR_MISSING_DATA)
+        return json.loads(props[domain])
 
     def validate(self, conf):
         for profile, entries in conf.iteritems():
@@ -105,8 +98,6 @@ class PerformanceProfilesValidation(cmvalidator.CMValidator):
             self.validate_caas_cpu_pools(profile, value)
         elif key == self.CAAS_CPU_POOL_SHARE:
             self.validate_caas_cpu_pool_share(value)
-        elif key == self.TUNING:
-            self.validate_tuning(profile, value)
 
     def validate_hugepagesz(self, profile, value):
         if value not in self.HUGEPAGESZ_VALUES:
@@ -154,10 +145,6 @@ class PerformanceProfilesValidation(cmvalidator.CMValidator):
             sum_ratio += value
         if sum_ratio > 100:
             self.raise_error(profile, self.ERR_CPU_POOL_RATIO)
-
-    def validate_tuning(self, profile, option):
-        if option not in self.TUNING_OPTIONS:
-            self.raise_error(profile, self.ERR_TUNING)
 
     def allowed_attributes(self, profile, entries, allowed_attributes):
         for key in entries.keys():
