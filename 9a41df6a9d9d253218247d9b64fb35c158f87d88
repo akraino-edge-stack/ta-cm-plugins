@@ -16,6 +16,24 @@
       "revId": "9a41df6a9d9d253218247d9b64fb35c158f87d88",
       "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf59635_c63d33a3",
+        "filename": "validators/src/CaasValidation.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 184
+      },
+      "writtenOn": "2019-09-26T09:03:54Z",
+      "side": 1,
+      "message": "Rephrased",
+      "parentUuid": "03cc77f7_540775db",
+      "revId": "9a41df6a9d9d253218247d9b64fb35c158f87d88",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
     }
   ]
 }
