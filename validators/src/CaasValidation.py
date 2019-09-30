@@ -182,8 +182,8 @@ class CaasValidation(cmvalidator.CMValidator):
     def check_cidr_overlaps_with_netw_subnets(self, cidr_in, props, parameter):
         netw_conf = self._get_conf(props, self.NETW_DOMAIN)
         cidrs = self.caas_utils.get_every_key_occurrence(netw_conf, self.CIDR)
-        for cidr_in in cidrs:
-            if docker0_cidr.overlaps(ipaddr.IPNetwork(cidr)):
+        for cidr in cidrs:
+            if cidr_in.overlaps(ipaddr.IPNetwork(cidr)):
                 raise CaasValidationError(
                     'CIDR configured for {} shall be an unused IP range, '
                     'but it overlaps with {} from {}.'.format(parameter, cidr,
