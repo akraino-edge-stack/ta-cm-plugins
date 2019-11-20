@@ -15,6 +15,7 @@
 # pylint: disable=missing-docstring,invalid-name,too-few-public-methods,too-many-instance-attributes,too-many-lines
 import os
 import json
+import subprocess
 from jinja2 import Environment
 from cmframework.apis import cmansibleinventoryconfig
 from cmframework.apis import cmerror
@@ -570,7 +571,7 @@ JSON_CEPH_ANSIBLE_MONS_HOST_VARS = """
          "openstack_keys": [
              {
                  "acls": [],
-                 "key": "$(ceph-authtool --gen-print-key)",
+                 "key": "{{ ceph_keys['client.shared'] }}",
                  "mode": "0600",
                  "mon_cap": "allow r",
                  "name": "client.shared",
@@ -578,7 +579,7 @@ JSON_CEPH_ANSIBLE_MONS_HOST_VARS = """
              }{% if is_openstack_deployment %},
              {
                  "acls": [],
-                 "key": "$(ceph-authtool --gen-print-key)",
+                 "key": "{{ ceph_keys['client.glance'] }}",
                  "mode": "0640",
                  "mon_cap": "allow r",
                  "name": "client.glance",
@@ -586,7 +587,7 @@ JSON_CEPH_ANSIBLE_MONS_HOST_VARS = """
              },
              {
                  "acls": [],
-                 "key": "$(ceph-authtool --gen-print-key)",
+                 "key": "{{ ceph_keys['client.cinder'] }}",
                  "mode": "0640",
                  "mon_cap": "allow r, allow command \\\\\\\\\\\\\\"osd blacklist\\\\\\\\\\\\\\"",
                  "name": "client.cinder",
@@ -596,7 +597,7 @@ JSON_CEPH_ANSIBLE_MONS_HOST_VARS = """
         {%- if is_caas_deployment and 0 < osd_pool_caas_pg_num %},
              {
                  "acls": [],
-                 "key": "$(ceph-authtool --gen-print-key)",
+                 "key": "{{ ceph_keys['client.caas'] }}",
                  "mode": "0600",
                  "mon_cap": "allow r",
                  "name": "client.caas",
@@ -689,6 +690,7 @@ class storageinventory(cmansibleinventoryconfig.CMAnsibleInventoryConfigPlugin):
         self._caas_config_handler = self.confman.get_caas_config_handler()
         self._ceph_caas_pg_proportion = 0.0
         self._ceph_openstack_pg_proportion = 0.0
+        self._ceph_keys_dict = None
         self._cinder_pool_name = 'volumes'
         self._glance_pool_name = 'images'
         self._nova_pool_name = 'vms'
@@ -888,6 +890,21 @@ class storageinventory(cmansibleinventoryconfig.CMAnsibleInventoryConfigPlugin):
             hosts=self.hosts,
             **self._get_ceph_vars())
 
+    @property
+    def _ceph_keys(self):
+        if not self._ceph_keys_dict:
+            try:
+                self._ceph_keys_dict = {
+                    'client.shared': subprocess.check_output(["ceph-authtool", "--gen-print-key"]).strip(),
+                    'client.glance': subprocess.check_output(["ceph-authtool", "--gen-print-key"]).strip(),
+                    'client.cinder': subprocess.check_output(["ceph-authtool", "--gen-print-key"]).strip(),
+                    'client.caas':   subprocess.check_output(["ceph-authtool", "--gen-print-key"]).strip()
+                }
+            except Exception as exp:
+                raise cmerror.CMError(str(exp))
+
+        return self._ceph_keys_dict
+
     def _get_ceph_vars(self):
         return {
             'osd_pool_images_pg_num':  self._calculated_images_pg_num,
@@ -901,7 +918,8 @@ class storageinventory(cmansibleinventoryconfig.CMAnsibleInventoryConfigPlugin):
             'nova_pool':               self._nova_pool_name,
             'glance_pool':             self._glance_pool_name,
             'cinder_pool':             self._cinder_pool_name,
-            'platform_pool':           self._platform_pool_name
+            'platform_pool':           self._platform_pool_name,
+            'ceph_keys':               self._ceph_keys
         }
 
     def _add_ceph_ansible_osds_sample_host_vars(self):
