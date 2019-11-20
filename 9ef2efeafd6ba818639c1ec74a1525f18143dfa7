@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2274c03_3870aebc",
+        "filename": "inventoryhandlers/storageinventory/storageinventory.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 251
+      },
+      "writtenOn": "2019-11-20T16:11:00Z",
+      "side": 1,
+      "message": "This must be replaced. Retuns only exitcode.",
+      "range": {
+        "startLine": 894,
+        "startChar": 32,
+        "endLine": 894,
+        "endChar": 38
+      },
+      "revId": "9ef2efeafd6ba818639c1ec74a1525f18143dfa7",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
