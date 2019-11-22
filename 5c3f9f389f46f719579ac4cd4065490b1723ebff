@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eec93673_21281f12",
+        "filename": "inventoryhandlers/storageinventory/storageinventory.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 43
+      },
+      "writtenOn": "2019-11-22T20:09:55Z",
+      "side": 1,
+      "message": "What is the mechanism by which these could ever be different? When this function is called, isn\u0027t it just going to invoke the exact same command four times in quick succession in the same environment?",
+      "range": {
+        "startLine": 898,
+        "startChar": 0,
+        "endLine": 901,
+        "endChar": 106
+      },
+      "revId": "5c3f9f389f46f719579ac4cd4065490b1723ebff",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
