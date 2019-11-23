@@ -22,6 +22,30 @@
       "revId": "5c3f9f389f46f719579ac4cd4065490b1723ebff",
       "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0478eddd_e8364ba3",
+        "filename": "inventoryhandlers/storageinventory/storageinventory.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 137
+      },
+      "writtenOn": "2019-11-23T22:26:08Z",
+      "side": 1,
+      "message": "`ceph-authtools` generates a new (different) key on each invocation, so we\u0027ll get 4 different keys:\n\n  [cloudadmin@controller-1 ~]$ ceph-authtool --gen-print-key\n  AQCfsdldOHoqDRAAvcO1a0klrAZ6W+8soYz1uQ\u003d\u003d\n  [cloudadmin@controller-1 ~]$ ceph-authtool --gen-print-key\n  AQCgsdlds/0vBRAAMbgzYRWooWCZMgDyKHFKDg\u003d\u003d\n  [cloudadmin@controller-1 ~]$ ceph-authtool --gen-print-key\n  AQChsdld+RDcCxAAsB/OxSUh/SckVvL7Ay9U4A\u003d\u003d\n  [cloudadmin@controller-1 ~]$ ceph-authtool --gen-print-key\n  AQChsdldr68rNRAATyq4pR4zaK0W2gs6j0qggw\u003d\u003d",
+      "parentUuid": "eec93673_21281f12",
+      "range": {
+        "startLine": 898,
+        "startChar": 0,
+        "endLine": 901,
+        "endChar": 106
+      },
+      "revId": "5c3f9f389f46f719579ac4cd4065490b1723ebff",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
     }
   ]
 }
