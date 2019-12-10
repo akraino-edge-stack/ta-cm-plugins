@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import json
+import platform
 from jinja2 import Environment
 
 from cmframework.apis import cmansibleinventoryconfig
@@ -151,8 +152,8 @@ class zbaremetalnodeinventory(cmansibleinventoryconfig.CMAnsibleInventoryConfigP
                         break
 
             properties = {
-                "capabilities": "boot_option:local",
-                "cpu_arch": "x86_64",
+                "capabilities": {"boot_option:local"},
+                "cpu_arch": platform.machine(),
                 "cpus": 8,
                 "disk_size": 40,
                 "ram": 16384
@@ -162,6 +163,10 @@ class zbaremetalnodeinventory(cmansibleinventoryconfig.CMAnsibleInventoryConfigP
                 "provisioning_server": nfs_server_ip,
                 "virtmedia_deploy_iso": "file:///opt/images/ironic-deploy.iso",
             }
+
+            # aarch64 platforms only supports EFI bootloaders
+            if platform.machine() == 'aarch64':
+                properties["capabilities"].add("boot_mode:uefi")
 
             if utils.is_virtualized():
                 driver = "ssh_virtmedia"
