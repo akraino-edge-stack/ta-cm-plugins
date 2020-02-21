@@ -763,7 +763,7 @@ class NetworkProfilesValidation(cmvalidator.CMValidator):
         return self.DEFAULT_MTU
 
     def validate_iface_name(self, context, iface):
-        if not isinstance(iface, basestring) or not re.match(self.IFACE_NAME_MATCH, iface):
+        if not isinstance(iface, basestring) or not re.match(self.IFACE_NAME_MATCH, iface, re.IGNORECASE):
             self.err_invalid_iface_name(context)
         if len(iface) > self.MAX_IFACE_NAME_LEN:
             self.err_iface_name_len(context)
