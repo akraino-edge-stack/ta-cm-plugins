@@ -14,7 +14,7 @@
 
 Name:       userconfighandlers
 Version:    %{_version}
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    Basic user configuration handlers
 License:        %{_platform_licence}
 Source0:        %{name}-%{version}.tar.gz

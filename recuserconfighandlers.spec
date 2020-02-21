@@ -14,7 +14,7 @@
 
 Name:       recuserconfighandlers
 Version:    %{_version}
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    REC user configuration handlers
 License:    %{_platform_licence}
 Source0:    %{name}-%{version}.tar.gz

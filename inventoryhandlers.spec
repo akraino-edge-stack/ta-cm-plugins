@@ -14,7 +14,7 @@
 
 Name:       inventoryhandlers
 Version:    %{_version}
-Release:    3%{?dist}
+Release:    4%{?dist}
 Summary:    Inventory handlers
 License:        %{_platform_licence}
 Source0:        %{name}-%{version}.tar.gz
