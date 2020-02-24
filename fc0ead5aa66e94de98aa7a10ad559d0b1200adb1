@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef1dfd70_6a178980",
+        "filename": "validators.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 183
+      },
+      "writtenOn": "2020-02-24T12:12:25Z",
+      "side": 1,
+      "message": "i think the source file is packaged into only this RPM",
+      "revId": "fc0ead5aa66e94de98aa7a10ad559d0b1200adb1",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": true
+    }
+  ]
+}
